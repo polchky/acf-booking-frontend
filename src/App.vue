@@ -3,17 +3,26 @@
         <vAppBar
             app
         >
-            <vToolbarTitle>Réservations Arc Club Fribourg</vToolbarTitle>
+            <vToolbarTitle>Réservations ACF</vToolbarTitle>
             <vSpacer />
             <vBtn
                 v-show="isLoggedIn"
+                :to="{ name: 'newBooking' }"
+                color="indigo accent-2"
+            >
+                Ajouter une réservation
+            </vBtn>
+            <vBtn
+                v-show="isLoggedIn"
+                title="Mon profil"
                 icon
-                to="/profile"
+                :to="{ name: 'profile' }"
             >
                 <vIcon>mdi-account</vIcon>
             </vBtn>
             <vBtn
                 v-show="isLoggedIn"
+                title="Déconnexion"
                 icon
                 @click="logout()"
             >
@@ -65,8 +74,7 @@ export default {
         },
     }),
 
-    async created() {
-        this.isLoggedIn = service.auth.isLoggedIn();
+    created() {
     },
 
     methods: {
@@ -77,8 +85,9 @@ export default {
             this.snackbar.color = color;
         },
 
-        updateIsLoggedIn() {
+        async updateIsLoggedIn() {
             this.isLoggedIn = service.auth.isLoggedIn();
+            this.user = this.isLoggedIn ? await service.users.get(service.auth.getUserId()) : null;
         },
 
         logout() {

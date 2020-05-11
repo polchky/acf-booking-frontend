@@ -22,6 +22,12 @@
                             >
                                 Mettre à jour
                             </vBtn>
+                            <vBtn
+                                class="mr-4"
+                                to="/bookings"
+                            >
+                                Retour
+                            </vBtn>
                         </vForm>
                     </vCardText>
                 </vCard>

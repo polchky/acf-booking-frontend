@@ -40,17 +40,20 @@ export default {
 
     bookings: {
 
-        list() {
-            return axios.get('/bookings/');
+        list(from, to) {
+            return axios.get(`/bookings/?from=${from}&to=${to}`);
         },
 
-        async create(booking) {
-            const res = await axios.post('/bookings/', booking);
-            return res.status === 201;
+        create(booking) {
+            return axios.post('/bookings/', booking);
         },
 
         delete(bookingId) {
             return axios.delete(`/bookings/${bookingId}`);
+        },
+
+        getAvailabilities(date, location) {
+            return axios.get(`/bookings/available?date=${date}&location=${location}`);
         },
     },
 
@@ -66,8 +69,15 @@ export default {
 
         async delete(userId) {
             await axios.delete(`/users/${userId}`);
-            exp = null;
             delete axios.defaults.headers.common.Authorization;
+        },
+
+    },
+
+    config: {
+
+        get() {
+            return axios.get('/config');
         },
 
     },
