@@ -138,7 +138,10 @@ export default {
         allowedDates(date) { return this.dates.includes(date); },
 
         async updateAvailabilities() {
-            const res = await service.bookings.getAvailabilities(this.selDate, this.selLocation);
+            const res = await service.bookings.getAvailabilities(
+                this.selDate,
+                this.selLocation,
+            );
             this.availabilities = res.data;
             this.targets = Object.keys(this.availabilities).map((t) => {
                 if (t === 'default') return { value: 'default', text: 'Sans Préférence' };
@@ -167,7 +170,12 @@ export default {
                 this.$emit('showMessage', 'Réservation enregistrée!', 'success');
                 this.$router.push({ name: 'bookings' });
             } catch (err) {
-                this.$emit('showMessage', 'Un problème est survenu', 'error');
+                if (service.auth.isLoggedIn()) {
+                    this.$emit('showMessage', 'Un problème est survenu', 'error');
+                } else {
+                    this.$emit('showMessage', 'Votre connexion a expiré.', 'error');
+                    this.$router.push({ name: 'login' });
+                }
             }
         },
     },

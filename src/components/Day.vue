@@ -1,7 +1,7 @@
 <template>
     <vRow>
         <vCol>
-            <vCard>
+            <vCard color="blue-grey darken-4">
                 <vCardTitle>
                     {{ title }}
                 </vCardTitle>
@@ -14,14 +14,14 @@
                         <vCardTitle>
                             {{ name }}
                         </vCardTitle>
-                        <vList
-                            two-line
-                        >
+                        <vList>
                             <template
                                 v-for="(booking, i) in location"
                                 :booking="booking"
                             >
-                                <vListItem :key="booking.id">
+                                <vListItem
+                                    :key="booking.id"
+                                >
                                     <vListItemContent>
                                         <vListItemTitle>
                                             {{ getBookingTitle(booking) }}
@@ -30,6 +30,19 @@
                                             {{ booking.target ? `cible: ${booking.target}m` : '' }}
                                         </vListItemSubtitle>
                                     </vListItemContent>
+                                    <vListItemAction
+                                        v-if="user.id === booking.user.id"
+                                    >
+                                        <vBtn
+                                            fab
+                                            small
+                                            @click="$emit('deleteBooking', booking.id)"
+                                        >
+                                            <vIcon color="red">
+                                                mdi-trash-can
+                                            </vIcon>
+                                        </vBtn>
+                                    </vListItemAction>
                                 </vListItem>
                                 <v-divider
                                     v-if="i + 1 < location.length"
@@ -50,8 +63,9 @@ import utils from '@/assets/js/utils';
 export default {
 
     props: {
+        user: { type: Object, default: () => {} },
         date: { type: String, default: () => '' },
-        bookings: { type: Object, default: () => [] },
+        bookings: { type: Object, default: () => {} },
     },
 
     data: () => ({
@@ -60,9 +74,9 @@ export default {
 
     async created() {
         const entries = Object.entries(this.bookings);
-        entries
-            .filter((key, value) => value.length === 0)
-            .forEach((key) => { delete this.bookings[key]; });
+
+        const filter = entries.filter((el) => el[1].length === 0);
+        filter.forEach((key) => { this.$delete(this.bookings, key[0]); });
         const options = {
             weekday: 'long',
             month: 'long',
