@@ -48,6 +48,12 @@
                     >
                         Placer une réservation
                     </vBtn>
+                    <vBtn
+                        class="mt-4 ml-4"
+                        to="/bookings"
+                    >
+                        Annuler
+                    </vBtn>
                 </vForm>
             </vCol>
         </vRow>
@@ -131,7 +137,6 @@ export default {
         this.locations = config.locations.map((l) => l.name);
 
         await this.updateAvailabilities();
-
     },
 
     methods: {
@@ -172,6 +177,7 @@ export default {
             } catch (err) {
                 if (service.auth.isLoggedIn()) {
                     this.$emit('showMessage', 'Un problème est survenu', 'error');
+                    await this.updateAvailabilities();
                 } else {
                     this.$emit('showMessage', 'Votre connexion a expiré.', 'error');
                     this.$router.push({ name: 'login' });

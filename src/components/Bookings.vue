@@ -61,7 +61,6 @@ export default {
     }),
 
     async created() {
-
         const res = await service.users.get(service.auth.getUserId());
         this.user = res.data;
         await this.getBookings();
@@ -84,7 +83,7 @@ export default {
             const res = await service.bookings.list(utils.getYMD(today), utils.getYMD(max));
 
             const bookings = res.data;
-            bookings.sort((a, b) => a.time < b.time);
+            bookings.sort((a, b) => (a.time > b.time ? 1 : -1));
             for (let i = 0; i < bookings.length; i += 1) {
                 const time = new Date(bookings[i].time);
                 this.dates[utils.getYMD(time)][bookings[i].location].push(bookings[i]);
@@ -106,6 +105,7 @@ export default {
             } catch (err) {
                 if (service.auth.isLoggedIn()) {
                     this.$emit('showMessage', 'Une erreur est survenue.', 'error');
+                    await this.getBookings();
                 } else {
                     this.$emit('showMessage', 'Votre connexion a expiré.', 'error');
                     this.$router.push({ name: 'login' });
