@@ -14,7 +14,7 @@
                             />
                             <vTextField
                                 v-model="username"
-                                label="Nom et prénom"
+                                label="Prénom et nom"
                                 :rules="usernameRules"
                             />
                             <vTextField

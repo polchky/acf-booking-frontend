@@ -31,7 +31,7 @@
                                         </vListItemSubtitle>
                                     </vListItemContent>
                                     <vListItemAction
-                                        v-if="user.id === booking.user.id"
+                                        v-if="user.id === booking.user.id || user.role === 'admin'"
                                     >
                                         <vBtn
                                             fab

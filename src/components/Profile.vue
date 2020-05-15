@@ -65,6 +65,7 @@ export default {
                 const userId = service.auth.getUserId();
                 await service.users.update(userId, { username: this.username });
                 this.$emit('showMessage', 'Profil mis à jour.', 'success');
+                this.$router.push({ name: 'bookings' });
             } catch (err) {
                 if (service.auth.isLoggedIn()) {
                     this.$emit('showMessage', 'Une erreur inconnue est survenue.', 'error');

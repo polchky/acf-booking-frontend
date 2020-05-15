@@ -16,6 +16,7 @@
                         v-model="selLocation"
                         :items="locations"
                         label="Choisir le lieu"
+                        no-data-text="Aucune disponibilité"
                         required
                     />
                     <vSelect
@@ -23,6 +24,7 @@
                         v-model="selTarget"
                         :items="targets"
                         label="Choisir la cible"
+                        no-data-text="Aucune disponibilité"
                     />
                     <vSelect
                         v-if="selLocation !== null"
@@ -30,6 +32,7 @@
                         :items="times"
                         label="Choisir l'heure"
                         :rules="[(v) => !!v || 'Veuillez indiquer l\'heure']"
+                        no-data-text="Aucune disponibilité"
                         required
                     />
                     <vSelect
@@ -38,6 +41,7 @@
                         :items="durations"
                         label="Choisir la durée"
                         :rules="[(v) => !!v || 'Veuillez indiquer la durée']"
+                        no-data-text="Aucune disponibilité"
                         required
                     />
                     <vBtn
