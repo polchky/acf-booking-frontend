@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://acf-booking-api.decensor.yt';
+axios.defaults.baseURL = VUE_APP_BACKEND_URL;
 
 export default {
 
@@ -20,13 +20,12 @@ export default {
             return exp > now;
         },
 
-        register(data) {
-            return axios.post('/auth/register', data);
+        register(data) VUE_APP_API_URLs.post('/auth/register', data);
         },
 
         validate(token) {
             return axios.get(`/auth/validate?token=${token}`);
-        },
+        },VUE_APP_API_URL
 
         async login(data) {
             const res = await axios.post('/auth/login', data);
