@@ -20,12 +20,13 @@ export default {
             return exp > now;
         },
 
-        register(data) VUE_APP_API_URLs.post('/auth/register', data);
+        register(data) {
+            return axios.post('/auth/register', data);
         },
 
         validate(token) {
             return axios.get(`/auth/validate?token=${token}`);
-        },VUE_APP_API_URL
+        },
 
         async login(data) {
             const res = await axios.post('/auth/login', data);
