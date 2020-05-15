@@ -83,7 +83,15 @@ export default {
             const res = await service.bookings.list(utils.getYMD(today), utils.getYMD(max));
 
             const bookings = res.data;
-            bookings.sort((a, b) => (a.time > b.time ? 1 : -1));
+            bookings.sort((a, b) => {
+                if (a.time === b.time) {
+                    if (a.duration === b.duration) {
+                        return a.user.username > b.user.username ? 1 : -1;
+                    }
+                    return a.duration > b.duration ? 1 : -1;
+                }
+                return a.time > b.time ? 1 : -1;
+            });
             for (let i = 0; i < bookings.length; i += 1) {
                 const time = new Date(bookings[i].time);
                 this.dates[utils.getYMD(time)][bookings[i].location].push(bookings[i]);
