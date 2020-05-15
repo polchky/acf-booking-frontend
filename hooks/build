@@ -1,0 +1,1 @@
+docker build --build-arg VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL -f $DOCKERFILE_PATH -t $IMAGE_NAME .
