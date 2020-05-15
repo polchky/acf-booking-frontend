@@ -68,7 +68,6 @@ const router = new Router({
             beforeEnter: ifAuthenticated,
         },
     ],
-    mode: 'history',
 });
 
 Vue.use(Router);
