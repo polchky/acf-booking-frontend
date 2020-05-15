@@ -159,6 +159,7 @@ export default {
         },
 
         async submit() {
+            this.loading = true;
             const time = new Date(this.selDate);
             time.setHours(this.selTime.split('h')[0], this.selTime.split('h')[1], 0, 0);
             const parts = this.selDuration.split('h');
@@ -183,6 +184,7 @@ export default {
                     this.$router.push({ name: 'login' });
                 }
             }
+            this.loading = false;
         },
     },
 };

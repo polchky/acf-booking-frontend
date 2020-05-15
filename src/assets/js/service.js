@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = VUE_APP_BACKEND_URL;
+axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL;
 
 export default {
 
