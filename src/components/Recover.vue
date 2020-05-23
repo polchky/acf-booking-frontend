@@ -6,11 +6,11 @@
                 md="6"
             >
                 <vCard>
-                    <vCardTitle>Connexion</vCardTitle>
+                    <vCardTitle>Récupération du compte</vCardTitle>
                     <vCardText>
                         <vForm
                             v-model="valid"
-                            @submit="login"
+                            @submit="recover"
                         >
                             <vTextField
                                 v-model="email"
@@ -18,34 +18,19 @@
                                 label="Email"
                                 :rules="emailRules"
                             />
-                            <vTextField
-                                v-model="password"
-                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="showPassword ? 'text' : 'password'"
-                                :rules="passwordRules"
-                                label="Mot de passe"
-                                hint="Au moins 8 charactères"
-                                counter
-                                @click:append="showPassword = !showPassword"
-                            />
                             <vBtn
                                 type="submit"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
                             >
-                                Connexion
+                                Envoyer
                             </vBtn>
                         </vForm>
                     </vCardText>
                     <vCardText>
-                        <router-link :to="'register'">
-                            Créer un compte
-                        </router-link>
-                    </vCardText>
-                    <vCardText>
-                        <router-link :to="'recover'">
-                            Mot de passe oublié?
+                        <router-link :to="'login'">
+                            Retour
                         </router-link>
                     </vCardText>
                 </vCard>
@@ -69,12 +54,6 @@ export default {
             (v) => !!v || 'Le champ email est nécessaire',
             (v) => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'l\'email doit être valide',
         ],
-        password: '',
-        showPassword: false,
-        passwordRules: [
-            (v) => v.length >= 8 || 'Au moins 8 charactères',
-            (v) => !!v || 'Obligatoire.',
-        ],
         loading: false,
     }),
 
@@ -82,17 +61,16 @@ export default {
     },
 
     methods: {
-        async login() {
+        async recover() {
             this.loading = true;
             try {
-                await service.auth.login({
+                await service.auth.recover({
                     email: this.email,
-                    password: this.password,
                 });
-                this.$emit('login');
-                this.$router.push({ name: 'bookings' });
+                this.$emit('showMessage', 'Un email vous a été envoyé, veuillez suivre les instructions y figurant.', 'success');
+                this.$router.push({ name: 'login' });
             } catch (err) {
-                this.$emit('showMessage', 'Erreur de connexion', 'error');
+                this.$emit('showMessage', 'Un problème inconnu est survenu.', 'error');
             }
             this.loading = false;
         },

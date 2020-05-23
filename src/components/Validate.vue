@@ -27,7 +27,7 @@ export default {
 
     async created() {
         try {
-            const res = await service.auth.validate(this.$route.query.token);
+            await service.auth.validate(this.$route.query.token);
             this.$emit('showMessage', 'Votre compte a bien été validé! Vous pouvez maintenant vous connecter.', 'success');
         } catch (err) {
             this.$emit('showMessage', 'La validation a échoué. Peut-être avez-vous déjà validé votre compte?', 'error');

@@ -25,7 +25,7 @@ export default {
         },
 
         validate(token) {
-            return axios.get(`/auth/validate?token=${token}`);
+            return axios.post(`/auth/validate?token=${token}`);
         },
 
         async login(data) {
@@ -35,6 +35,14 @@ export default {
 
         logout() {
             delete axios.defaults.headers.common.Authorization;
+        },
+
+        recover(data) {
+            return axios.post('/auth/password/reset', data);
+        },
+
+        reset(data, token) {
+            return axios.post(`/auth/password/set?token=${token}`, data);
         },
     },
 

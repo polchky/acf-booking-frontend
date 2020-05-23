@@ -1,11 +1,17 @@
 <template>
     <vContainer>
         <vRow justify="center">
-            <vCol cols="6">
+            <vCol
+                cols="12"
+                md="6"
+            >
                 <vCard>
                     <vCardTitle>Création d'un compte</vCardTitle>
                     <vCardText>
-                        <vForm v-model="valid">
+                        <vForm
+                            v-model="valid"
+                            @submit="register"
+                        >
                             <vTextField
                                 v-model="email"
                                 type="email"
@@ -28,10 +34,10 @@
                                 @click:append="showPassword = !showPassword"
                             />
                             <vBtn
+                                type="submit"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
-                                @click="register"
                             >
                                 S'enregistrer
                             </vBtn>
@@ -69,7 +75,7 @@ export default {
         showPassword: false,
         passwordRules: [
             (v) => v.length >= 8 || 'Au moins 8 charactères',
-            (v) => !!v || 'Required.',
+            (v) => !!v || 'Obligatoire.',
         ],
         loading: false,
     }),

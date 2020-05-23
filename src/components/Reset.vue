@@ -1,23 +1,14 @@
 <template>
     <vContainer>
         <vRow justify="center">
-            <vCol
-                cols="12"
-                md="6"
-            >
+            <vCol cols="6">
                 <vCard>
-                    <vCardTitle>Connexion</vCardTitle>
+                    <vCardTitle>Veuillez entrer un nouveau mot de passe</vCardTitle>
                     <vCardText>
                         <vForm
                             v-model="valid"
-                            @submit="login"
+                            @submit="reset"
                         >
-                            <vTextField
-                                v-model="email"
-                                type="email"
-                                label="Email"
-                                :rules="emailRules"
-                            />
                             <vTextField
                                 v-model="password"
                                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -28,24 +19,28 @@
                                 counter
                                 @click:append="showPassword = !showPassword"
                             />
+                            <vTextField
+                                v-model="confirmationPassword"
+                                :append-icon="showConfirmationPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showConfirmationPassword ? 'text' : 'password'"
+                                :rules="[confirmationPasswordRule]"
+                                label="Confirmer le mot de passe"
+                                counter
+                                @click:append="showConfirmationPassword = !showConfirmationPassword"
+                            />
                             <vBtn
                                 type="submit"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
                             >
-                                Connexion
+                                Envoyer
                             </vBtn>
                         </vForm>
                     </vCardText>
                     <vCardText>
-                        <router-link :to="'register'">
-                            Créer un compte
-                        </router-link>
-                    </vCardText>
-                    <vCardText>
-                        <router-link :to="'recover'">
-                            Mot de passe oublié?
+                        <router-link :to="'login'">
+                            Retour
                         </router-link>
                     </vCardText>
                 </vCard>
@@ -55,44 +50,45 @@
 </template>
 
 <script>
-import utils from '@/assets/js/utils';
 import service from '@/assets/js/service';
 
 export default {
 
 
     data: () => ({
-        utils,
         valid: false,
-        email: '',
-        emailRules: [
-            (v) => !!v || 'Le champ email est nécessaire',
-            (v) => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'l\'email doit être valide',
-        ],
         password: '',
         showPassword: false,
         passwordRules: [
             (v) => v.length >= 8 || 'Au moins 8 charactères',
             (v) => !!v || 'Obligatoire.',
         ],
+        confirmationPassword: '',
+        showConfirmationPassword: false,
         loading: false,
     }),
+
+    computed: {
+        confirmationPasswordRule() {
+            return this.confirmationPassword === this.password || 'Ne correspond pas au mot de passe.';
+        },
+    },
 
     created() {
     },
 
     methods: {
-        async login() {
+        async reset() {
             this.loading = true;
             try {
-                await service.auth.login({
-                    email: this.email,
+                await service.auth.reset({
                     password: this.password,
-                });
-                this.$emit('login');
-                this.$router.push({ name: 'bookings' });
+                },
+                this.$route.query.token);
+                this.$emit('showMessage', 'Votre mot de passe a été changé avec succès.', 'success');
+                this.$router.push({ name: 'login' });
             } catch (err) {
-                this.$emit('showMessage', 'Erreur de connexion', 'error');
+                this.$emit('showMessage', 'Un problème inconnu est survenu.', 'error');
             }
             this.loading = false;
         },

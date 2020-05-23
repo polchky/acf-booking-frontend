@@ -8,7 +8,9 @@ import bookingsComponent from '@/components/Bookings.vue';
 import loginComponent from '@/components/Login.vue';
 import newBookingComponent from '@/components/NewBooking.vue';
 import profileComponent from '@/components/Profile.vue';
+import recoverComponent from '@/components/Recover.vue';
 import registerComponent from '@/components/Register.vue';
+import resetComponent from '@/components/Reset.vue';
 import validateComponent from '@/components/Validate.vue';
 
 Vue.config.productionTip = false;
@@ -51,9 +53,21 @@ const router = new Router({
             beforeEnter: ifAuthenticated,
         },
         {
+            name: 'recover',
+            path: '/recover',
+            component: recoverComponent,
+            beforeEnter: ifNotAuthenticated,
+        },
+        {
             name: 'register',
             path: '/register',
             component: registerComponent,
+            beforeEnter: ifNotAuthenticated,
+        },
+        {
+            name: 'reset',
+            path: '/reset',
+            component: resetComponent,
             beforeEnter: ifNotAuthenticated,
         },
         {

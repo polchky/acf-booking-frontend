@@ -39,7 +39,7 @@
             v-model="snackbar.visible"
             :top="true"
             :color="snackbar.color"
-            :timeout="0"
+            :timeout="10000"
         >
             {{ snackbar.text }}
             <vSpacer />
@@ -55,8 +55,6 @@
 
 <script>
 import service from '@/assets/js/service';
-import utils from '@/assets/js/utils';
-
 
 export default {
     name: 'App',

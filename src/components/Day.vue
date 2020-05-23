@@ -1,6 +1,9 @@
 <template>
-    <vRow>
-        <vCol>
+    <vRow justify="center">
+        <vCol
+            cols="12"
+            md="8"
+        >
             <vCard color="blue-grey darken-4">
                 <vCardTitle>
                     {{ title }}
