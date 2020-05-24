@@ -10,7 +10,6 @@
                     <vCardText>
                         <vForm
                             v-model="valid"
-                            @submit="register"
                         >
                             <vTextField
                                 v-model="email"
@@ -34,10 +33,10 @@
                                 @click:append="showPassword = !showPassword"
                             />
                             <vBtn
-                                type="submit"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
+                                @click="register"
                             >
                                 S'enregistrer
                             </vBtn>

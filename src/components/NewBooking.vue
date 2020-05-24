@@ -7,7 +7,6 @@
             >
                 <vForm
                     v-model="valid"
-                    @submit="submit"
                 >
                     <vDatePicker
                         v-model="selDate"
@@ -49,10 +48,10 @@
                         required
                     />
                     <vBtn
-                        type="submit"
                         class="mt-4"
                         :disabled="!valid"
                         :loading="loading"
+                        @click="submit"
                     >
                         Placer une réservation
                     </vBtn>

@@ -8,7 +8,9 @@
                 <vCard>
                     <vCardTitle>Profil</vCardTitle>
                     <vCardText>
-                        <vForm v-model="valid">
+                        <vForm
+                            v-model="valid"
+                        >
                             <vTextField
                                 v-model="username"
                                 label="Nom à afficher"

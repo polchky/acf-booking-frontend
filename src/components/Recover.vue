@@ -10,7 +10,6 @@
                     <vCardText>
                         <vForm
                             v-model="valid"
-                            @submit="recover"
                         >
                             <vTextField
                                 v-model="email"
@@ -19,10 +18,10 @@
                                 :rules="emailRules"
                             />
                             <vBtn
-                                type="submit"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
+                                @click="recover"
                             >
                                 Envoyer
                             </vBtn>

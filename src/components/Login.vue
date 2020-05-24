@@ -10,7 +10,6 @@
                     <vCardText>
                         <vForm
                             v-model="valid"
-                            @submit="login"
                         >
                             <vTextField
                                 v-model="email"
@@ -29,10 +28,11 @@
                                 @click:append="showPassword = !showPassword"
                             />
                             <vBtn
-                                type="submit"
+                                type="button"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
+                                @click="login"
                             >
                                 Connexion
                             </vBtn>

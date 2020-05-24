@@ -7,7 +7,6 @@
                     <vCardText>
                         <vForm
                             v-model="valid"
-                            @submit="reset"
                         >
                             <vTextField
                                 v-model="password"
@@ -29,10 +28,10 @@
                                 @click:append="showConfirmationPassword = !showConfirmationPassword"
                             />
                             <vBtn
-                                type="submit"
                                 class="mr-4"
                                 :disabled="!valid"
                                 :loading="loading"
+                                @click="reset"
                             >
                                 Envoyer
                             </vBtn>
