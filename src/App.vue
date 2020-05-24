@@ -39,7 +39,7 @@
             v-model="snackbar.visible"
             :top="true"
             :color="snackbar.color"
-            :timeout="10000"
+            :timeout="0"
         >
             {{ snackbar.text }}
             <vSpacer />
