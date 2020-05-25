@@ -21,6 +21,14 @@
                 <vIcon>mdi-account</vIcon>
             </vBtn>
             <vBtn
+                v-show="isLoggedIn && user.role === 'admin'"
+                title="Utilisateurs"
+                icon
+                :to="{ name: 'users' }"
+            >
+                <vIcon>mdi-account-group</vIcon>
+            </vBtn>
+            <vBtn
                 v-show="isLoggedIn"
                 title="Déconnexion"
                 icon
@@ -39,7 +47,6 @@
             v-model="snackbar.visible"
             :top="true"
             :color="snackbar.color"
-            :timeout="0"
         >
             {{ snackbar.text }}
             <vSpacer />
@@ -70,6 +77,7 @@ export default {
             text: '',
             color: '',
         },
+        user: null,
     }),
 
     created() {
@@ -84,8 +92,14 @@ export default {
         },
 
         async updateIsLoggedIn() {
-            this.isLoggedIn = service.auth.isLoggedIn();
-            this.user = this.isLoggedIn ? await service.users.get(service.auth.getUserId()) : null;
+            if (service.auth.isLoggedIn()) {
+                const res = await service.users.get(service.auth.getUserId());
+                this.user = res.data;
+                this.isLoggedIn = true;
+            } else {
+                this.isLoggedIn = false;
+                this.user = null;
+            }
         },
 
         logout() {

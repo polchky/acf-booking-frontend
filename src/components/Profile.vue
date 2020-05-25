@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import utils from '@/assets/js/utils';
 import service from '@/assets/js/service';
 
 export default {

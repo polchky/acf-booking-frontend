@@ -11,6 +11,7 @@ import profileComponent from '@/components/Profile.vue';
 import recoverComponent from '@/components/Recover.vue';
 import registerComponent from '@/components/Register.vue';
 import resetComponent from '@/components/Reset.vue';
+import usersComponent from '@/components/Users.vue';
 import validateComponent from '@/components/Validate.vue';
 
 Vue.config.productionTip = false;
@@ -79,6 +80,12 @@ const router = new Router({
             name: 'profile',
             path: '/profile',
             component: profileComponent,
+            beforeEnter: ifAuthenticated,
+        },
+        {
+            name: 'users',
+            path: '/users',
+            component: usersComponent,
             beforeEnter: ifAuthenticated,
         },
     ],

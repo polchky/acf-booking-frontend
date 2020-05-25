@@ -67,6 +67,10 @@ export default {
 
     users: {
 
+        list() {
+            return axios.get('/users/');
+        },
+
         get(userId) {
             return axios.get(`/users/${userId}`);
         },
