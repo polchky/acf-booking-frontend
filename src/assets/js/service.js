@@ -1,7 +1,6 @@
-const config = require('../../../config.json');
 import axios from 'axios';
 
-axios.defaults.baseURL = config.serverURL;
+axios.defaults.baseURL = window.env.backendURL;
 
 export default {
 
